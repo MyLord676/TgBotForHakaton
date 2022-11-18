@@ -1,4 +1,4 @@
-﻿using StartUp;
+﻿using StartUp.TelegramBot;
 
 namespace TelegramBotExperiments
 {
@@ -11,4 +11,3 @@ namespace TelegramBotExperiments
         }
     }
 }
-

@@ -2,7 +2,7 @@
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
 
-namespace StartUp
+namespace StartUp.TelegramBot
 {
     public class TgBot
     {
@@ -15,7 +15,7 @@ namespace StartUp
             if (update.Type != UpdateType.Message) return;
 
             var message = update.Message;
-            if(message != null)
+            if (message != null)
                 await botClient.SendTextMessageAsync(message.Chat.Id, "Привет-привет!!");
         }
 
@@ -25,7 +25,7 @@ namespace StartUp
         }
 
         public void InfinityPolling()
-        { 
+        {
             while (true)
             {
                 var command = Console.ReadLine()?.ToLower();
