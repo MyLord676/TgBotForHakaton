@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "Kc1K73qF6ZhfriNg6PCMEjb2CElH1dUDxgxArdAj33Cto7Gk9dfvx+Ij0+DFqlbVQ/fr6JY0LPG6IIxKsBNzaw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Alexey Eltcov\\OneDrive\\Документы\\GitHub\\StartUp\\StartUp\\StartUp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Alexey Eltcov\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\Alexey Eltcov\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
+    "C:\\Users\\Alexey Eltcov\\.nuget\\packages\\telegram.bot\\17.0.0\\telegram.bot.17.0.0.nupkg.sha512",
+    "C:\\Users\\Alexey Eltcov\\.nuget\\packages\\telegram.bot.extensions.polling\\1.0.2\\telegram.bot.extensions.polling.1.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
