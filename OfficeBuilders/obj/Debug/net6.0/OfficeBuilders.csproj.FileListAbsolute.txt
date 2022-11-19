@@ -1,0 +1,5 @@
+C:\Users\safety\source\repos\TgBotForHakaton\OfficeBuilders\obj\Debug\net6.0\OfficeBuilders.csproj.AssemblyReference.cache
+C:\Users\safety\source\repos\TgBotForHakaton\OfficeBuilders\obj\Debug\net6.0\OfficeBuilders.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\safety\source\repos\TgBotForHakaton\OfficeBuilders\obj\Debug\net6.0\OfficeBuilders.AssemblyInfoInputs.cache
+C:\Users\safety\source\repos\TgBotForHakaton\OfficeBuilders\obj\Debug\net6.0\OfficeBuilders.AssemblyInfo.cs
+C:\Users\safety\source\repos\TgBotForHakaton\OfficeBuilders\obj\Debug\net6.0\OfficeBuilders.csproj.CoreCompileInputs.cache
