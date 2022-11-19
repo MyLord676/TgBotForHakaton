@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using StartUp.Domain;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection.Emit;
 
 namespace StartUp.Data
 {
     public class TgBotContext: DbContext
     {
-        //public DbSet<Category> Categories { get; set; }
-        //public DbSet<Product> Products { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<QuestionAndAnswer>? QuestionsAndAnswers { get; set; }
+        public TgBotContext(): base("DBConnection")
+        {
+
+        }
     }
 }

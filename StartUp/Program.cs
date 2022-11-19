@@ -6,7 +6,10 @@ namespace TelegramBotExperiments
     {
         static void Main()
         {
-            var bot = new TgBot("5841458717:AAGygPGReGjD8T4EOq8BaMcRuYdQUx0kqqg");
+            Console.WriteLine("App start");
+            var bot = new TgBot("5841458717:AAEeWaganrS_XYoxZNzOvJ1lZsdCyXiEOOk", 
+                Directory.GetCurrentDirectory() + "/data.csv", 
+                Directory.GetCurrentDirectory() + "/SendTo.csv");
             bot.InfinityPolling();
         }
     }

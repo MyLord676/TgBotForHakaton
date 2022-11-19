@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "NyTMpPMGtkIQfQd4B6SU2x5jdUFE4OqodymtsYBjQ+K3dxlqYrw9kQdMc00y5uQfjjKfgfbZ26/lAFhgLGn1fg==",
+  "dgSpecHash": "J1ODeP5YMsJZ3OoRrj5gs3t9gjAEg0tpzkhsbbL6Ps5xZB/Orf4xsBDp7DGnPwposYWXDT+GmW8K1M6qbuIfUg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Alexey Eltcov\\OneDrive\\Документы\\GitHub\\TgBotForHakaton\\StartUp\\StartUp.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Alexey Eltcov\\.nuget\\packages\\csvhelper\\30.0.1\\csvhelper.30.0.1.nupkg.sha512",
     "C:\\Users\\Alexey Eltcov\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\Alexey Eltcov\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Alexey Eltcov\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
