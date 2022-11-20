@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\safety\\source\\repos\\TgBotForHakaton\\StartUp\\StartUp.csproj": {}
+    "C:\\Users\\Alexey Eltcov\\OneDrive\\Документы\\GitHub\\TgBotForHakaton\\StartUp\\StartUp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\safety\\source\\repos\\TgBotForHakaton\\StartUp\\StartUp.csproj": {
+    "C:\\Users\\Alexey Eltcov\\OneDrive\\Документы\\GitHub\\TgBotForHakaton\\StartUp\\StartUp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\safety\\source\\repos\\TgBotForHakaton\\StartUp\\StartUp.csproj",
+        "projectUniqueName": "C:\\Users\\Alexey Eltcov\\OneDrive\\Документы\\GitHub\\TgBotForHakaton\\StartUp\\StartUp.csproj",
         "projectName": "StartUp",
-        "projectPath": "C:\\Users\\safety\\source\\repos\\TgBotForHakaton\\StartUp\\StartUp.csproj",
-        "packagesPath": "C:\\Users\\safety\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\safety\\source\\repos\\TgBotForHakaton\\StartUp\\obj\\",
+        "projectPath": "C:\\Users\\Alexey Eltcov\\OneDrive\\Документы\\GitHub\\TgBotForHakaton\\StartUp\\StartUp.csproj",
+        "packagesPath": "C:\\Users\\Alexey Eltcov\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Alexey Eltcov\\OneDrive\\Документы\\GitHub\\TgBotForHakaton\\StartUp\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\safety\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Alexey Eltcov\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -71,7 +67,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -80,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

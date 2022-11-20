@@ -17,6 +17,7 @@ namespace StartUp.TelegramBot
         private string configPath;
         private List<string[]> config;
         private List<int[]> sendTo;
+        private List<int[]> analytics;
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(update));
@@ -165,19 +166,19 @@ namespace StartUp.TelegramBot
                 using (var stream = File.OpenRead(newDoc1.FullName))
                 {
                     Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
-                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.docx";
+                    iof.FileName = "summary" + DateTime.Now.Ticks.ToString() + ".docx";
                     var send = await botClient.SendDocumentAsync(message.Chat.Id, iof, "Ваш документ");
                 }
                 using (var stream = File.OpenRead(newDoc2.FullName))
                 {
                     Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
-                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.docx";
+                    iof.FileName = "memo" + DateTime.Now.Ticks.ToString() + ".docx";
                     var send = await botClient.SendDocumentAsync(message.Chat.Id, iof, "Ваш документ");
                 }
                 using (var stream = File.OpenRead(newDoc3.FullName))
                 {
                     Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
-                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.pptx";
+                    iof.FileName = "PitchDeck" + DateTime.Now.Ticks.ToString() + " .pptx";
                     var send = await botClient.SendDocumentAsync(message.Chat.Id, iof, "Ваш документ");
                 }
 
@@ -203,22 +204,31 @@ namespace StartUp.TelegramBot
                 using (var stream = File.OpenRead(newDoc1.FullName))
                 {
                     Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
-                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.docx";
+                    iof.FileName = "summary"+DateTime.Now.Ticks.ToString() + ".docx";
                     var send = await botClient.SendDocumentAsync(id, iof, "Ваш документ");
                 }
                 using (var stream = File.OpenRead(newDoc2.FullName))
                 {
                     Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
-                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.docx";
+                    iof.FileName = "memo"+ DateTime.Now.Ticks.ToString() +".docx";
                     var send = await botClient.SendDocumentAsync(id, iof, "Ваш документ");
                 }
                 using (var stream = File.OpenRead(newDoc3.FullName))
                 {
                     Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
-                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.pptx";
+                    iof.FileName = "PitchDeck"+ DateTime.Now.Ticks.ToString() +" .pptx";
                     var send = await botClient.SendDocumentAsync(id, iof, "Ваш документ");
                 }
 
+                
+
+                newDoc1.Delete();
+                newDoc2.Delete();
+                newDoc3.Delete();
+
+                await botClient.SendTextMessageAsync(analytics[0][0], 
+                    $"Документ был создан пользователем:{message.Chat.Username}(telegram id: {message.Chat.Id})");
+                await botClient.SendTextMessageAsync(analytics[0][0], $"Документ был отправлен эксперту по telegram id:{id}");
                 return;
             }
 
@@ -281,7 +291,28 @@ namespace StartUp.TelegramBot
             }
         }
 
-        public TgBot(string token, string configPath, string sendToPath)
+        private void ConvertAnalytics(string sendToPath)
+        {
+            using (CsvReader csv = new CsvReader(new StreamReader(sendToPath), CultureInfo.InvariantCulture))
+            {
+                int fieldCount = csv.ColumnCount;
+                analytics = new List<int[]>();
+                int field;
+                while (csv.Read())
+                {
+                    int[] row = new int[1];
+                    for (int i = 0; i < 1; i++)
+                    {
+                        csv.TryGetField(i, out field);
+                        row[i] = field;
+                        Console.WriteLine(field);
+                    }
+                    analytics.Add(row);
+                }
+            }
+        }
+
+        public TgBot(string token, string configPath, string sendToPath, string analytics)
         {
             this.token = token;
             Bot = new TelegramBotClient(this.token);
@@ -292,6 +323,7 @@ namespace StartUp.TelegramBot
             );
             this.configPath = configPath;
             ConvertSendTo(sendToPath);
+            ConvertAnalytics(analytics);
             ConvertConfig();
             Console.WriteLine("tg bot");
         }
