@@ -48,6 +48,14 @@
               "target": "Package",
               "version": "[6.4.4, )"
             },
+            "MicrosoftOfficeCore": {
+              "target": "Package",
+              "version": "[15.0.0, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Telegram.Bot.Extensions.Polling": {
               "target": "Package",
               "version": "[1.0.2, )"

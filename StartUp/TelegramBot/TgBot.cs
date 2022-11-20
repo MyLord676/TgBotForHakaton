@@ -1,10 +1,12 @@
 ﻿using CsvHelper;
 using StartUp.Data;
-using System.Diagnostics;
+using StartUp.FileBuilders;
+using System.Drawing;
 using System.Globalization;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using File = System.IO.File;
+
 
 namespace StartUp.TelegramBot
 {
@@ -64,7 +66,7 @@ namespace StartUp.TelegramBot
                     else
                     {
                         if (!sessions.Last().IsActive)
-                        { 
+                        {
                             sessions.Last().IsActive = true;
                             db.SaveChanges();
                         }
@@ -74,7 +76,7 @@ namespace StartUp.TelegramBot
 
                 if (!sessions.Last().IsActive)
                     return;
-                
+
 
                 Domain.Document doc = docs.Last();
 
@@ -83,13 +85,17 @@ namespace StartUp.TelegramBot
                     answeredQuestions = new List<Domain.QuestionAndAnswer>();
                 if (sessions.Last().LastQuestion != null)
                 {
-                    if (message.Photo != null)
+                    if (message.Photo != null || message.Document != null)
                     {
-                        var fileId = message.Photo.Last().FileId;
+                        string fileId;
+                        if (message.Photo != null)
+                            fileId = message.Photo.Last().FileId;
+                        else
+                            fileId = message.Document.FileId;
                         var fileInfo = await botClient.GetFileAsync(fileId);
                         var filePath = fileInfo.FilePath;
 
-                        string destinationFilePath = Directory.GetCurrentDirectory() + "/Photo/downloaded"+ DateTime.Now.Ticks + ".png";
+                        string destinationFilePath = Directory.GetCurrentDirectory() + "/Photo/downloaded" + DateTime.Now.Ticks + ".png";
                         await using FileStream fileStream = System.IO.File.OpenWrite(destinationFilePath);
                         await botClient.DownloadFileAsync(
                             filePath: filePath,
@@ -124,34 +130,100 @@ namespace StartUp.TelegramBot
                 sessions.Last().LastQuestion = null;
                 db.SaveChanges();
 
-                //var docId = db.Documents.Where(q => q.TelegramID == message.Chat.Id).First().DocumentID;
-                //var ques = db.QuestionsAndAnswers.Where(q => q.DocumentID == docId).ToList();
+                var docId = db.Documents.Where(q => q.TelegramID == message.Chat.Id).First().DocumentID;
+                var ques = db.QuestionsAndAnswers.Where(q => q.DocumentID == docId).ToList();
 
-                //var questionName = new Dictionary<string, string>();
-                //foreach (var item in ques)
-                //{
-                //    foreach (var t in config)
-                //    {
-                //        if (t.Contains(item.Question))
-                //        {
-                //            questionName.Add(t[0], item.Answer);
-                //            break;
-                //        }
-                //    }
-                //}
-                //Console.WriteLine(questionName);
+                var questionName = new Dictionary<string, object>();
+                foreach (var item in ques)
+                {
+                    foreach (var t in config)
+                    {
+                        if (t.Contains(item.Question))
+                        {
+                            string n = "";
+                            if (item.Answer.Contains("%Photo%"))
+                                n = item.Answer.Substring(7);
+                            else
+                            {
+                                questionName.Add(t[0], item.Answer);
+                                break;
+                            }
+                            Image img = null;
+                            if (n != "")
+                                img = Image.FromFile(n);
+                            if (img != null)
+                                questionName.Add(t[0], img);
+                            break;
+                        }
+                    }
+                }
+                Console.WriteLine(questionName);
 
-                //using (var stream = File.OpenRead("D:\\test.docx"))
-                //{
-                //    Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
-                //    iof.FileName = "smth.docx";
-                //    var send = await botClient.SendDocumentAsync(message.Chat.Id, iof, "Ваш документ");
-                //}
+                var newDoc1 = DockXBuilder.Build(Directory.GetCurrentDirectory() + "/Templates/memoTemplate1.docx", "Test1" + DateTime.Now.Ticks.ToString(), questionName);
+                var newDoc2 = DockXBuilder.Build(Directory.GetCurrentDirectory() + "/Templates/summaryTemplate1.docx", "Test2" + DateTime.Now.Ticks.ToString(), questionName);
+                var newDoc3 = PptXBuilder.Build(Directory.GetCurrentDirectory() + "/Templates/PitchDeckTemplate1.pptx", "Test3" + DateTime.Now.Ticks.ToString(), questionName);
+                using (var stream = File.OpenRead(newDoc1.FullName))
+                {
+                    Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
+                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.docx";
+                    var send = await botClient.SendDocumentAsync(message.Chat.Id, iof, "Ваш документ");
+                }
+                using (var stream = File.OpenRead(newDoc2.FullName))
+                {
+                    Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
+                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.docx";
+                    var send = await botClient.SendDocumentAsync(message.Chat.Id, iof, "Ваш документ");
+                }
+                using (var stream = File.OpenRead(newDoc3.FullName))
+                {
+                    Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
+                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.pptx";
+                    var send = await botClient.SendDocumentAsync(message.Chat.Id, iof, "Ваш документ");
+                }
+
+                int id = 0;
+                for (int i = 0; i < sendTo.Count; i++)
+                {
+                    if (sendTo[i][1] > sendTo[i][2])
+                    {
+                        id = sendTo[i][0];
+                        sendTo[i][2]++;
+                    }
+                }
+                if (id == 0)
+                {
+                    for (int i = 0; i < sendTo.Count; i++)
+                    {
+                        sendTo[i][2] = 0;
+                    }
+                    id = sendTo[0][0];
+                    sendTo[0][2]++;
+                }
+
+                using (var stream = File.OpenRead(newDoc1.FullName))
+                {
+                    Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
+                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.docx";
+                    var send = await botClient.SendDocumentAsync(id, iof, "Ваш документ");
+                }
+                using (var stream = File.OpenRead(newDoc2.FullName))
+                {
+                    Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
+                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.docx";
+                    var send = await botClient.SendDocumentAsync(id, iof, "Ваш документ");
+                }
+                using (var stream = File.OpenRead(newDoc3.FullName))
+                {
+                    Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
+                    iof.FileName = DateTime.Now.Ticks.ToString() + "smth.pptx";
+                    var send = await botClient.SendDocumentAsync(id, iof, "Ваш документ");
+                }
 
                 return;
             }
-            
+
         }
+
         public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(exception));
