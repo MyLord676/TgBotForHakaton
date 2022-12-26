@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+
+    tgadmin:
+           build: "./"
+           deploy:
+               replicas: 1
+           restart: "no"
+           network_mode: host
+           volumes:
+               - /home/alex/Alex/Projects/DjangoTgAdmin/taskmanager:/usr/src/DjangoTgAdmin/taskmanager
+           logging:
+               driver: json-file
