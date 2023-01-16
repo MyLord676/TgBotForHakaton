@@ -204,23 +204,23 @@ namespace StartUp.TelegramBot
                 using (var stream = File.OpenRead(newDoc1.FullName))
                 {
                     Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
-                    iof.FileName = "summary"+DateTime.Now.Ticks.ToString() + ".docx";
+                    iof.FileName = "summary" + DateTime.Now.Ticks.ToString() + ".docx";
                     var send = await botClient.SendDocumentAsync(id, iof, "Ваш документ");
                 }
                 using (var stream = File.OpenRead(newDoc2.FullName))
                 {
                     Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
-                    iof.FileName = "memo"+ DateTime.Now.Ticks.ToString() +".docx";
+                    iof.FileName = "memo" + DateTime.Now.Ticks.ToString() + ".docx";
                     var send = await botClient.SendDocumentAsync(id, iof, "Ваш документ");
                 }
                 using (var stream = File.OpenRead(newDoc3.FullName))
                 {
                     Telegram.Bot.Types.InputFiles.InputOnlineFile iof = new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream);
-                    iof.FileName = "PitchDeck"+ DateTime.Now.Ticks.ToString() +" .pptx";
+                    iof.FileName = "PitchDeck" + DateTime.Now.Ticks.ToString() + " .pptx";
                     var send = await botClient.SendDocumentAsync(id, iof, "Ваш документ");
                 }
 
-                
+
 
                 newDoc1.Delete();
                 newDoc2.Delete();
